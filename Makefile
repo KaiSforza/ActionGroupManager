@@ -4,9 +4,8 @@ KSPDIR  := ${HOME}/.local/share/Steam/SteamApps/common/Kerbal\ Space\ Program
 MANAGED := ${KSPDIR}/KSP_Data/Managed/
 TOOLBAR := ../ksp_toolbar/
 
-FILES := $(wildcard src/*.cs) \
-         $(wildcard ${TOOLBAR}/Toolbar/*/*.cs) \
-         $(wildcard ${TOOLBAR}/Toolbar/Internal/*/*.cs)
+FILES := $(wildcard src/*.cs)
+TBLIBS:= ${TOOLBAR}/build/Toolbar
 
 GMCS    := gmcs
 GIT     := git
@@ -27,7 +26,7 @@ info:
 
 build: info
 	mkdir -p build
-	${GMCS} -t:library -lib:${MANAGED} \
+	${GMCS} -t:library -lib:${MANAGED} -r:${TBLIBS} \
 		-r:Assembly-CSharp,Assembly-CSharp-firstpass,UnityEngine \
 		-out:build/ActionGroupManager.dll \
 		${FILES}
