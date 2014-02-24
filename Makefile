@@ -25,7 +25,7 @@ info:
 
 build: build/ActionGroupManager.dll
 
-build/%.dll: info
+build/%.dll: info ${FILES}
 	mkdir -p build
 	${GMCS} -t:library -lib:${MANAGED} -r:"${TBLIBS}" \
 		-r:Assembly-CSharp,Assembly-CSharp-firstpass,UnityEngine \
