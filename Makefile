@@ -24,9 +24,11 @@ info:
 	@echo "================================"
 	@echo "${FILES}"
 
-build: info
+build: build/ActionGroupManager.dll
+
+build/%.dll: info
 	mkdir -p build
-	${GMCS} -t:library -lib:${MANAGED} -r:${TBLIBS} \
+	${GMCS} -t:library -lib:"${MANAGED}" -r:"${TBLIBS}" \
 		-r:Assembly-CSharp,Assembly-CSharp-firstpass,UnityEngine \
 		-out:build/ActionGroupManager.dll \
 		${FILES}
@@ -35,6 +37,7 @@ package: build
 	mkdir -p package/ActionGroupManager/Plugins
 	cp COPYING.txt package/ActionGroupManager/
 	cp build/ActionGroupManager.dll package/ActionGroupManager/Plugins/
+	cp -r ToolbarIcons/ package/ActionGroupManager/ToolbarIcons
 
 tar.gz: package
 	${TAR} zcf ActionGroupManager-$(shell ${GIT} describe --tags --long --always).tar.gz package/ActionGroupManager
@@ -47,11 +50,11 @@ clean:
 	rm -rf build/ package/
 
 install: build
-	mkdir -p ${KSPDIR}/GameData/ActionGroupManager/Plugins
-	cp build/ActionGroupManager.dll ${KSPDIR}/GameData/ActionGroupManager/Plugins/
+	mkdir -p "${KSPDIR}"/GameData/ActionGroupManager/Plugins
+	cp build/ActionGroupManager.dll "${KSPDIR}"/GameData/ActionGroupManager/Plugins/
 
 uninstall: info
-	rm -rf ${KSPDIR}/GameData/ActionGroupManager/Plugins
+	rm -rf "${KSPDIR}"/GameData/ActionGroupManager/Plugins
 
 
 .PHONY : all info build package tar.gz zip clean install uninstall
