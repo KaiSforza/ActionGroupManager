@@ -23,9 +23,9 @@ info:
 	@echo "  KSP Data: ${KSPDIR}"
 	@echo "================================"
 
-build: build/ActionGroupManager.dll
+build: info build/ActionGroupManager.dll
 
-build/%.dll: info ${FILES}
+build/%.dll: ${FILES}
 	mkdir -p build
 	${GMCS} -t:library -lib:${MANAGED} -r:"${TBLIBS}" \
 		-r:Assembly-CSharp,Assembly-CSharp-firstpass,UnityEngine \
