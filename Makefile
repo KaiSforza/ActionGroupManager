@@ -22,13 +22,12 @@ info:
 	@echo "  zip:     ${ZIP}"
 	@echo "  KSP Data: ${KSPDIR}"
 	@echo "================================"
-	@echo "${FILES}"
 
 build: build/ActionGroupManager.dll
 
 build/%.dll: info
 	mkdir -p build
-	${GMCS} -t:library -lib:"${MANAGED}" -r:"${TBLIBS}" \
+	${GMCS} -t:library -lib:${MANAGED} -r:"${TBLIBS}" \
 		-r:Assembly-CSharp,Assembly-CSharp-firstpass,UnityEngine \
 		-out:build/ActionGroupManager.dll \
 		${FILES}
